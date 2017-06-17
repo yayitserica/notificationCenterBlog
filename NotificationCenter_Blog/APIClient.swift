@@ -12,7 +12,7 @@ class APIClient {
     
     class func getAPIdata( completion:@escaping (URL)-> Void) {
         
-        let urlString = "https://pixabay.com/api/?key=\(key)&q=aquatic+ocean&image_type=photo&pretty=true"
+        let urlString = "https://pixabay.com/api/?key=\(Secrets.key)&q=aquatic+ocean&image_type=photo&pretty=true"
         
         let url = URL(string: urlString)
         
@@ -27,14 +27,13 @@ class APIClient {
                 let responseJSON = try JSONSerialization.jsonObject(with: unwrappedData, options: []) as! json
                 let hitsArray = responseJSON["hits"] as! [json]
                 let randomDict = Int(arc4random_uniform(UInt32(hitsArray.count)))
-                let firstDict = hitsArray[randomDict] as! json
+                let firstDict = hitsArray[randomDict] 
                 let webImageString = firstDict["webformatURL"] as! String
                 let imageURL:URL = URL(string: webImageString)!
                 completion(imageURL)
             } catch {
                 print("catch - getAPIdata()")
             }
-            
         }
         datatask.resume()
     }

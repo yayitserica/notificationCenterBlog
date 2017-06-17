@@ -24,8 +24,8 @@ class FirstViewController: UIViewController {
         super.viewDidLoad()
         APIClient.getAPIdata { (webImageURL) in
             DispatchQueue.main.async {
-                let imageData = NSData(contentsOf: webImageURL)
-                let image = UIImage(data: imageData as! Data)
+                guard let imageData = NSData(contentsOf: webImageURL) else { return }
+                let image = UIImage(data: imageData as Data)
                 self.oceanImage.image = image
             }
         }

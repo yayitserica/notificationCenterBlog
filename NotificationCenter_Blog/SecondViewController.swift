@@ -23,13 +23,12 @@ class SecondViewController: UIViewController {
             self.youLikedItLabel.isHidden = false
             APIClient.getAPIdata { (webImageURL) in
                 DispatchQueue.main.async {
-                    let imageData = NSData(contentsOf: webImageURL)
-                    let image = UIImage(data: imageData as! Data)
+                    guard let imageData = NSData(contentsOf: webImageURL) else { return }
+                    let image = UIImage(data: imageData as Data)
                     self.secondOceanImage.image = image
                 }
             }
         }
-
     }
     
     //3 - remove the observer after we're done with it, use deinit when the viewController gets deinitialized
